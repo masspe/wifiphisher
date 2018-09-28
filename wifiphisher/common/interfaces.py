@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 """
 This module was made to handle all the interface related operations of
 the program
@@ -60,7 +59,8 @@ class InvalidMacAddressError(Exception):
         :return: None
         :rtype: None
         """
-        message = "The MAC address could not be set. (Tried {0})".format(mac_address)
+        message = "The MAC address could not be set. (Tried {0})".format(
+            mac_address)
         Exception.__init__(self, message)
 
 
@@ -813,8 +813,8 @@ def is_add_vif_required(args):
             perfect_card = card
             use_one_phy = True
     else:
-        perfect_card, use_one_phy = get_perfect_card(
-            phy_to_vifs, vif_score_tuples)
+        perfect_card, use_one_phy = get_perfect_card(phy_to_vifs,
+                                                     vif_score_tuples)
 
     return perfect_card, use_one_phy
 
@@ -833,9 +833,10 @@ def is_managed_by_network_manager(interface_name):
 
     is_managed = False
     try:
-        nmcli_process = Popen(['/bin/sh', '-c', 'export LC_ALL=C; nmcli dev; unset LC_ALL'], 
-        stdout=constants.DN,
-        stderr=PIPE)
+        nmcli_process = Popen(
+            ['/bin/sh', '-c', 'export LC_ALL=C; nmcli dev; unset LC_ALL'],
+            stdout=constants.DN,
+            stderr=PIPE)
         out, err = nmcli_process.communicate()
 
         if err == None and out != "":
@@ -854,7 +855,7 @@ def is_managed_by_network_manager(interface_name):
             pass
             #logger.error("Failed to check if interface %s is managed by NetworkManager", interface_name)
 
-        nmcli_process.stdout.close();
+        nmcli_process.stdout.close()
 
     # NetworkManager service is not running so the devices must be unmanaged
     # (CalledProcessError)

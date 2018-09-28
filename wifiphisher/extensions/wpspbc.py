@@ -109,8 +109,8 @@ class Wpspbc(object):
                 pos = 0
                 # start looping to find the WPS PBC IE
                 while pos < len(wps_ie_array):
-                    if wps_ie_array[pos] == 0x10 and wps_ie_array[pos
-                                                                  + 1] == 0x12:
+                    if wps_ie_array[pos] == 0x10 and wps_ie_array[pos +
+                                                                  1] == 0x12:
                         return True
                     else:
                         data_len = (
@@ -179,18 +179,17 @@ class Wpspbc(object):
             with open("/tmp/wpa_supplicant.conf", 'w') as conf:
                 conf.write("ctrl_interface=/var/run/wpa_supplicant\n")
             try:
-                proc = subprocess.Popen(
-                    [
-                        'wpa_supplicant',
-                        '-i' + self._data.args.wpspbc_assoc_interface,
-                        '-Dnl80211', '-c/tmp/wpa_supplicant.conf'
-                    ],
-                    stdout=subprocess.PIPE)
+                proc = subprocess.Popen([
+                    'wpa_supplicant',
+                    '-i' + self._data.args.wpspbc_assoc_interface, '-Dnl80211',
+                    '-c/tmp/wpa_supplicant.conf'
+                ],
+                                        stdout=subprocess.PIPE)
                 time.sleep(2)
                 if proc.poll() is not None:
                     logger.error("supplicant lunches fail!!")
-                proc = subprocess.Popen(
-                    ['wpa_cli', 'wps_pbc'], stdout=subprocess.PIPE)
+                proc = subprocess.Popen(['wpa_cli', 'wps_pbc'],
+                                        stdout=subprocess.PIPE)
                 output = proc.communicate()[0]
                 if 'OK' not in output:
                     logger.error(

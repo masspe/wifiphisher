@@ -13,6 +13,7 @@ import wifiphisher.common.globals as universal
 
 logger = logging.getLogger(__name__)
 
+
 def is_deauth_frame(packet):
     """
     Determine if the sending frame is deauth frame
@@ -24,6 +25,7 @@ def is_deauth_frame(packet):
     if packet.subtype == 10 or packet.subtype == 12:
         return True
     return False
+
 
 class Deauth(object):
     """
@@ -179,9 +181,8 @@ class Deauth(object):
                 and self._is_target(packet)):
             # listen beacon to get the target attacking BSSIDs for the
             # specified ESSID
-            packets_to_send += self._craft_packet(bssid,
-                                                  constants.WIFI_BROADCAST,
-                                                  bssid)
+            packets_to_send += self._craft_packet(
+                bssid, constants.WIFI_BROADCAST, bssid)
             logger.info("Target deauth BSSID found: %s", bssid)
             # remember the channel of the given bssid
             self._deauth_bssids[bssid] = str(channel)
@@ -190,8 +191,8 @@ class Deauth(object):
             # if the channel of the target AP has been changed
             if str(channel) != self._deauth_bssids[bssid]:
                 logger.info("BSSID: %s changes channel to %d", bssid, channel)
-                self._update_target_ap_frames(str(channel),
-                                              str(self._deauth_bssids[bssid]), bssid)
+                self._update_target_ap_frames(
+                    str(channel), str(self._deauth_bssids[bssid]), bssid)
         if bssid not in self._deauth_bssids:
             return self._packets_to_send
 
@@ -199,7 +200,8 @@ class Deauth(object):
         if clients:
             self._observed_clients.add(clients[0])
             packets_to_send += clients[1]
-            logger.info("Client with BSSID %s is now getting deauthenticated", clients[0])
+            logger.info("Client with BSSID %s is now getting deauthenticated",
+                        clients[0])
 
         self._packets_to_send[str(channel)] += packets_to_send
 

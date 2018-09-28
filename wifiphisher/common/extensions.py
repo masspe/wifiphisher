@@ -144,8 +144,8 @@ class ExtensionManager(object):
         """
 
         # set the current channel to the ap channel
-        self._nm.set_interface_channel(self._interface,
-                                       int(self._shared_data.target_ap_channel))
+        self._nm.set_interface_channel(
+            self._interface, int(self._shared_data.target_ap_channel))
 
         # if the stop flag not set, change the channel
         while self._should_continue:
@@ -384,10 +384,12 @@ class ExtensionManager(object):
             for pkt in self._packets_to_send[self._current_channel] + \
                     self._packets_to_send["*"]:
                 try:
-                    if is_deauth_cont or not deauth_extension.is_deauth_frame(pkt):
-                        logger.debug("Send pkt with A1:%s A2:%s subtype:%s in channel:%s",
-                                     pkt.addr1, pkt.addr2, pkt.subtype,
-                                     self._current_channel)
+                    if is_deauth_cont or not deauth_extension.is_deauth_frame(
+                            pkt):
+                        logger.debug(
+                            "Send pkt with A1:%s A2:%s subtype:%s in channel:%s",
+                            pkt.addr1, pkt.addr2, pkt.subtype,
+                            self._current_channel)
                         self._socket.send(pkt)
                 except BaseException:
                     continue

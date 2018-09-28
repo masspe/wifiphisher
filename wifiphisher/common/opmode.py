@@ -111,10 +111,9 @@ class OpMode(object):
                 '--mac-ap-interface or --mac-extensions-interface (-iDM)')
 
         if args.deauth_essid and args.noextensions:
-            sys.exit(
-                '[' + constants.R + '-' + constants.W +
-                '] --deauth-essid (-dE) cannot work together with'
-                '--noextension (-nE)')
+            sys.exit('[' + constants.R + '-' + constants.W +
+                     '] --deauth-essid (-dE) cannot work together with'
+                     '--noextension (-nE)')
 
         # if args.deauth_essid is set we need the second card to
         # do the frequency hopping
@@ -132,17 +131,14 @@ class OpMode(object):
 
         # if args.logpath is defined args.logging must be set too
         if args.logpath and not args.logging:
-            sys.exit(
-                '[' + constants.R + '!' + constants.W +
-                '] --logpath (-lP) requires --logging option.'
-            )
+            sys.exit('[' + constants.R + '!' + constants.W +
+                     '] --logpath (-lP) requires --logging option.')
 
         # if args.credential_log_path is defined args.logging must be set too
         if args.credential_log_path and not args.logging:
             sys.exit(
                 '[' + constants.R + '!' + constants.W +
-                '] --credential-log-path (-cP) requires --logging option.'
-            )
+                '] --credential-log-path (-cP) requires --logging option.')
 
     def set_opmode(self, args, network_manager):
         """
@@ -205,7 +201,7 @@ class OpMode(object):
                     logger.info("Starting OP_MODE1 (0x1)")
             else:
                 # TODO: We should not add any vifs here.
-                # These should happen after the interface 
+                # These should happen after the interface
                 # checks in main engine
                 if self._perfect_card is not None:
                     network_manager.add_virtual_interface(self._perfect_card)
@@ -242,8 +238,9 @@ class OpMode(object):
         :rtype: bool
         """
 
-        return self.op_mode in [constants.OP_MODE2, constants.OP_MODE3,
-                                constants.OP_MODE6]
+        return self.op_mode in [
+            constants.OP_MODE2, constants.OP_MODE3, constants.OP_MODE6
+        ]
 
     def extensions_enabled(self):
         """

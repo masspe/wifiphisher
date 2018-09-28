@@ -59,10 +59,9 @@ class AccessPoint(object):
                 dhcpconf.write("address=/#/%s" % (constants.NETWORK_GW_IP, ))
         # catch the exception if dnsmasq is not installed
         try:
-            subprocess.Popen(
-                ['dnsmasq', '-C', self.dns_conf_path],
-                stdout=subprocess.PIPE,
-                stderr=constants.DN)
+            subprocess.Popen(['dnsmasq', '-C', self.dns_conf_path],
+                             stdout=subprocess.PIPE,
+                             stderr=constants.DN)
         except OSError:
             print("[{}!{}] dnsmasq is not installed!".format(
                 constants.R, constants.W))
@@ -73,14 +72,13 @@ class AccessPoint(object):
             stdout=constants.DN,
             stderr=constants.DN)
 
-        subprocess.Popen(
-            [
-                'ifconfig',
-                str(self.interface), 'up', constants.NETWORK_GW_IP, 'netmask',
-                constants.NETWORK_MASK
-            ],
-            stdout=constants.DN,
-            stderr=constants.DN)
+        subprocess.Popen([
+            'ifconfig',
+            str(self.interface), 'up', constants.NETWORK_GW_IP, 'netmask',
+            constants.NETWORK_MASK
+        ],
+                         stdout=constants.DN,
+                         stderr=constants.DN)
         # Give it some time to avoid "SIOCADDRT: Network is unreachable"
         time.sleep(1)
         # Make sure that we have set the network properly.
@@ -187,7 +185,8 @@ class AccessPoint(object):
                     existing_victim = victims_instance.victims_dic[mac_address]
                     if ip_address == existing_victim.ip_address:
                         return
-                    existing_victim.assign_ip_to_victim(mac_address, ip_address)
+                    existing_victim.assign_ip_to_victim(
+                        mac_address, ip_address)
                 else:
                     new_victim = victim.Victim(mac_address, ip_address)
                     victims_instance.add_to_victim_dic(new_victim)
