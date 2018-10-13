@@ -6,8 +6,7 @@ from time import (strftime, sleep)
 from logging import getLogger
 import scapy.layers.dot11 as dot11
 import wifiphisher.common.globals as universal
-from wifiphisher.common.constants import (NON_CLIENT_ADDRESSES,
-                                          LOCS_DIR)
+from wifiphisher.common.constants import (NON_CLIENT_ADDRESSES, LOCS_DIR)
 
 LOGGER = getLogger(__name__)
 

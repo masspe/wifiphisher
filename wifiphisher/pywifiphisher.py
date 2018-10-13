@@ -252,13 +252,13 @@ def set_channel_range():
         print '[' + G + '+' + W + "] " + \
               "JST timezone detected. " + \
               "Setting channel range to 1-14"
-        universal.ALL_2G_CHANNELS = range(1,15)
+        universal.ALL_2G_CHANNELS = range(1, 15)
         return
 
     print '[' + G + '+' + W + "] " + \
           "Timezone detected. " + \
           "Setting channel range to 1-13"
-    universal.ALL_2G_CHANNELS = range(1,14)
+    universal.ALL_2G_CHANNELS = range(1, 14)
     return
 
 
